@@ -9,7 +9,7 @@ interface ProductCardProps {
     product: IProduct;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product }: {product:IProduct}) => {
     const [selectedColor, setSelectedColor] = useState(product.colors[0]);
     return (
         <div className='shadow-lg rounded-lg overflow-hidden'>

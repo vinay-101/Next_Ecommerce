@@ -8,3 +8,10 @@ export interface  IProduct {
   colors:string[];
   images: Record<string, string>;
 }
+
+// inherit and add some more fields
+export interface ICartProduct extends IProduct {
+  quantity: number;
+  selectedSize: string;
+  selectedColor: string;
+}
