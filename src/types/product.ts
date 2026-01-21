@@ -1,11 +1,11 @@
-export interface  IProduct {
+export interface IProduct {
   id: number;
   name: string;
-  shortDescription:string
+  shortDescription: string
   description: string;
   price: number;
   sizes: string[];
-  colors:string[];
+  colors: string[];
   images: Record<string, string>;
 }
 
@@ -14,4 +14,19 @@ export interface ICartProduct extends IProduct {
   quantity: number;
   selectedSize: string;
   selectedColor: string;
+}
+
+export interface ICart {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  selectedSize: string;
+  selectedColor: string;
+}
+export interface CartState {
+  cartItems: ICart[];
+  addToCart: (product: ICart) => void;
+  removeFromCart: (id: number) => void;
+  cleanCart: () => void
 }

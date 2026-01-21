@@ -7,11 +7,13 @@ import CartItem from '@/components/CartItem'
 import ShippingAddress from '@/components/ShippingAddress'
 import PaymentMethod from '@/components/PaymentMethod'
 import { initialCartItems } from '@/data/cartProduct';
+import useCartStore from '@/store/cart.store';
 
 
 const CartPage = () => {
   const [currentStep, setCurrentStep] = useState(1)
   const [cartItems, setCartItems] = useState<ICartProduct[]>(initialCartItems)
+  const {removeFromCart} = useCartStore();
 
   const updateQuantity = (id: number, quantity: number) => {
     setCartItems(items =>
@@ -23,6 +25,7 @@ const CartPage = () => {
 
   const removeItem = (id: number) => {
     setCartItems(items => items.filter(item => item.id !== id))
+    removeFromCart(id);
   }
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0)

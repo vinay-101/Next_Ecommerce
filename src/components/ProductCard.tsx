@@ -1,16 +1,26 @@
 "use client"
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { IProduct } from '../types/product';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ShoppingCart } from 'lucide-react';
-
-interface ProductCardProps {
-    product: IProduct;
-}
+import useCartStore from '@/store/cart.store';
 
 const ProductCard = ({ product }: {product:IProduct}) => {
+    const {addToCart} = useCartStore();
     const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+    const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+
+    const handleAddToCart = ()=>{
+        addToCart({
+            id:product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1,
+            selectedSize:selectedSize,
+            selectedColor:selectedColor
+        })
+    }
     return (
         <div className='shadow-lg rounded-lg overflow-hidden'>
             {/* IMAGE  */}
@@ -37,6 +47,8 @@ const ProductCard = ({ product }: {product:IProduct}) => {
                         <select
                             name="size"
                             id="size"
+                            value={selectedSize}
+                            onChange={(e) => setSelectedSize(e.target.value)}
                             className="w-full ring-1 ring-gray-300 rounded-md px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         >
                             {product.sizes.map((size) => (
@@ -71,7 +83,7 @@ const ProductCard = ({ product }: {product:IProduct}) => {
                 {/* PRICE AND CALL TO ACTION  */}
                 <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold text-gray-900">${product.price}</span>
-                    <button className="ring-1 ring-gray-200 shadow-lg rounded-md px-3 py-2 text-sm cursor-pointer hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
+                    <button onClick={handleAddToCart} className="ring-1 ring-gray-200 shadow-lg rounded-md px-3 py-2 text-sm cursor-pointer hover:text-white hover:bg-black transition-all duration-300 flex items-center gap-2">
                         <ShoppingCart className='w-4 h-4' />
                         Add to Cart
                     </button>
